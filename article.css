@@ -1,0 +1,45 @@
+@page a4 {
+    size: a4 portrait;
+}
+
+@media print {
+
+    article {
+        page: a4;
+        break-after: page;
+    }
+}
+
+article {
+    & dl {
+        row-gap: .25em;
+        column-gap: 1em;
+        display: grid;
+        width: fit-content;
+    }
+
+    & dt {
+        grid-column: 1;
+    }
+
+    & dd {
+        grid-column: 2;
+    }
+}
+
+/* Teilnehmer + Sichtbarkeit */
+section>article:nth-of-type(n+1) {
+    display: none;
+}
+
+form:has([name="participant"][value="10"]:checked) section>article:nth-of-type(n+1) {
+    display: block;
+}
+
+form:has([name="participant"][value="9"]:checked) section>article:nth-of-type(n+2) {
+    display: block;
+}
+
+form:has([name="participant"][value="8"]:checked) section>article:nth-of-type(n+3) {
+    display: block;
+}

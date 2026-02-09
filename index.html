@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>EMR-Planer</title>
+    <meta charset="utf-8">
+
+
+    <link href="article.css" rel="stylesheet">
+    <link href="table.css" rel="stylesheet">
+
+    <style>
+        *,
+        *::after,
+        *::before {
+            margin: 0;
+            margin-inline: 0;
+            box-sizing: border-box;
+        }
+
+        input.appointment {
+            text-transform: uppercase;
+            width: 75px;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="data" onsubmit="return false">
+        <table>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col span="2" />
+            <col span="2" />
+            <col span="2" />
+            <col span="2" />
+            <thead>
+                <tr>
+                    <th rowspan="2">Name</th>
+                    <th rowspan="2" contenteditable="true" tabindex="-1">MED1</th>
+                    <th rowspan="2">MED2</th>
+                    <th rowspan="2">MED3</th>
+                    <th colspan="2">PSY1</th>
+                    <th colspan="2">PSY2</th>
+                    <th colspan="2">PSY3</th>
+                    <th colspan="2">PSY4</th>
+                </tr>
+                <tr>
+                    <th>Test</th>
+                    <th>Befund</th>
+                    <th>Test</th>
+                    <th>Befund</th>
+                    <th>Test</th>
+                    <th>Befund</th>
+                    <th>Test</th>
+                    <th>Befund</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- USER 10 -->
+                <tr>
+                    <td>
+                        <input class="username" value="10">
+                    </td>
+                    <td>
+                        <input class="appointment user01 med01">
+                    </td>
+                    <td>
+                        <input class="appointment user01 med02">
+                    </td>
+                    <td>
+                        <input class="appointment user01 med03">
+                    </td>
+                    <td>
+                        <input class="appointment user01 test01">
+                    </td>
+                    <td>
+                        <input class="appointment user01 report01">
+                    </td>
+                    <td>
+                        <input class="appointment user01 test02">
+                    </td>
+                    <td>
+                        <input class="appointment user01 report02">
+                    </td>
+                    <td>
+                        <input class="appointment user01 test03">
+                    </td>
+                    <td>
+                        <input class="appointment user01 report03">
+                    </td>
+                    <td>
+                        <input class="appointment user01 test04">
+                    </td>
+                    <td>
+                        <input class="appointment user01 report04">
+                    </td>
+                </tr>
+                <!-- USER 9 -->
+                <tr>
+                    <td>
+                        <input class="username" value="9">
+                    </td>
+                    <td>
+                        <input class="appointment user02 med01">
+                    </td>
+                    <td>
+                        <input class="appointment user02 med02">
+                    </td>
+                    <td>
+                        <input class="appointment user02 med03">
+                    </td>
+                    <td>
+                        <input class="appointment user02 test01">
+                    </td>
+                    <td>
+                        <input class="appointment user02 report01">
+                    </td>
+                    <td>
+                        <input class="appointment user02 test02">
+                    </td>
+                    <td>
+                        <input class="appointment user02 report02">
+                    </td>
+                    <td>
+                        <input class="appointment user02 test03">
+                    </td>
+                    <td>
+                        <input class="appointment user02 report03">
+                    </td>
+                    <td>
+                        <input class="appointment user02 test04">
+                    </td>
+                    <td>
+                        <input class="appointment user02 report04">
+                    </td>
+                </tr>
+                <!-- USER 8 -->
+                <tr>
+                    <td>
+                        <input class="username" value="8">
+                    </td>
+                    <td>
+                        <input class="appointment user03 med01">
+                    </td>
+                    <td>
+                        <input class="appointment user03 med02">
+                    </td>
+                    <td>
+                        <input class="appointment user03 med03">
+                    </td>
+                    <td>
+                        <input class="appointment user03 test01">
+                    </td>
+                    <td>
+                        <input class="appointment user03 report01">
+                    </td>
+                    <td>
+                        <input class="appointment user03 test02">
+                    </td>
+                    <td>
+                        <input class="appointment user03 report02">
+                    </td>
+                    <td>
+                        <input class="appointment user03 test03">
+                    </td>
+                    <td>
+                        <input class="appointment user03 report03">
+                    </td>
+                    <td>
+                        <input class="appointment user03 test04">
+                    </td>
+                    <td>
+                        <input class="appointment user03 report04">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <aside>
+            <fieldset>
+                <legend>Kalenderwoche</legend>
+                <input id="week" type="week">
+            </fieldset>
+            <fieldset>
+                <legend>Teilnehmer</legend>
+                <label><input type="radio" name="participant" value="1">1</label>
+                <label><input type="radio" name="participant" value="2">2</label>
+                <label><input type="radio" name="participant" value="3">3</label>
+                <label><input type="radio" name="participant" value="4">4</label>
+                <label><input type="radio" name="participant" value="5">5</label>
+                <label><input type="radio" name="participant" value="6">6</label>
+                <label><input type="radio" name="participant" value="7">7</label>
+                <label><input type="radio" name="participant" value="8">8</label>
+                <label><input type="radio" name="participant" value="9">9</label>
+                <label><input type="radio" name="participant" value="10" checked>10</label>
+            </fieldset>
+            <fieldset>
+                <legend>Mediziner</legend>
+                <label>
+                    <input type="checkbox" name="physician1" checked>Med1
+                </label>
+                <label>
+                    <input type="checkbox" name="physician2" checked>Med2
+                </label>
+                <label>
+                    <input type="checkbox" name="physician3" checked>Med3
+                </label>
+            </fieldset>
+            <fieldset>
+                <legend>Psychologen</legend>
+                <label>
+                    <input type="checkbox" name="psychologist1" checked>Psy1
+                </label>
+                <label>
+                    <input type="checkbox" name="psychologist2" checked>Psy2
+                </label>
+                <label>
+                    <input type="checkbox" name="psychologist3" checked>Psy3
+                </label>
+                <label>
+                    <input type="checkbox" name="psychologist4" checked>Psy4
+                </label>
+            </fieldset>
+        </aside>
+        <section>
+            <!-- USER 10 -->
+            <article>
+                <header>
+                    <h2>Termine für <output name="output-username-10">XXX</output></h2>
+                </header>
+                <h3><output name="user-10-monday" contenteditable="plaintext-only"></output></h3>
+                <dl>
+                    <dt>bla</dt>
+                    <dd>blub</dd>
+                    <dt>bla</dt>
+                    <dd>blub</dd>
+                </dl>
+                <h3><output name="user-10-thursday" contenteditable="plaintext-only"></output></h3>
+            </article>
+
+            <!-- USER 9-->
+            <article>
+                <header>
+                    <h2>Termine für <output name="output-username-9">XXX</output></h2>
+                </header>
+                <h3><output name="user-9-monday" contenteditable="plaintext-only"></output></h3>
+                <dl>
+                    <dt>bla</dt>
+                    <dd>blub</dd>
+                    <dt>bla</dt>
+                    <dd>blub</dd>
+                </dl>
+                <h3><output name="user-9-thursday" contenteditable="plaintext-only"></output></h3>
+            </article>
+
+            <!-- USER 8-->
+            <article>
+                <header>
+                    <h2>Termine für <output name="output-username-8">XXX</output></h2>
+                </header>
+                <h3><output name="user-8-monday" contenteditable="plaintext-only"></output></h3>
+                <dl>
+                    <dt>bla</dt>
+                    <dd>blub</dd>
+                    <dt>bla</dt>
+                    <dd>blub</dd>
+                </dl>
+                <h3><output name="user-8-thursday" contenteditable="plaintext-only"></output></h3>
+            </article>
+        </section>
+    </form>
+    <script src="utils.js"></script>
+    <script>
+        week.onchange = function (e) {
+            const instant = new Date(this.valueAsNumber).toTemporalInstant();
+            const zdt = instant.toZonedDateTimeISO("UTC");
+            const date = zdt.toPlainDate();
+
+            const options = {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+
+            for (let n = 10; n > 7; n--) {
+                data.elements[`user-${n}-monday`].value = date.toLocaleString("de",options);
+                data.elements[`user-${n}-thursday`].value = date.add({days: 1}).toLocaleString("de",options);
+
+            }
+            //alert(this.value)
+            //console.dir(dateOfEaster(date).toLocaleString())
+        }
+
+        document.querySelectorAll('.username').forEach((item, idx) => {
+            item.id = `user-${10 - idx}`;
+            item.onchange = (e) => {
+                console.dir(e.target.id)
+            }
+        });
+
+        document.querySelectorAll('.appointment').forEach(item => {
+            item.placeholder = 'TT HH:MM';
+
+            item.onfocus = function (e) {
+                console.log(this)
+            }
+
+            item.onchange = function (e) {
+                const regex = /((?<user>user\d\d)\s(?:(?<med>med\d\d)|(?<test>test\d\d)|(?<report>report\d\d)))/;
+                console.log(this.className.match(regex))
+            }
+        });
+
+        document.querySelectorAll('[contenteditable]').forEach(item => {
+            item.oninput = function (e) {
+                console.dir(e)
+            }
+        });
+
+    </script>
+</body>
+
+</html>
