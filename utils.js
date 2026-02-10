@@ -18,3 +18,45 @@ function dateOfEaster(tpd) {
 
     return Temporal.PlainDate.from({ year: year, month: month, day: day + 1 });
 }
+
+// get day of week (MO = 0)
+const getd = (int) => Math.trunc(int / 1440);
+
+// get hours
+const geth = (int) => Math.trunc(int % 1440 / 60);
+
+// get minutes
+const getm = (int) => int % 60;
+
+// parse string to integer of minutes
+const getn = (str) => {
+    console.assert(str.length === 8);
+
+    str = str.toUpperCase();
+
+    if (/^(MO|DI|MI|DO|FR) ([01][0-9]|[2][0-3]):([0-5][0-9])$/.test(str)) {
+
+        return ['MO', 'DI', 'MI', 'DO', 'FR']
+            .indexOf(str.substring(0, 2)) * 1440
+            + parseInt(str.substring(3, 5)) * 60
+            + parseInt(str.substring(6, 8));
+    }
+    return null;
+}
+
+// convert integer to text representation
+const gett = (int) => {
+    console.assert(0 <= int && int < 7200);
+
+    return ['MO', 'DI', 'MI', 'DO', 'FR'][getd(int)].concat(
+        ' ', '00'.concat(geth(int)).slice(-2),
+        ':', '00'.concat(getm(int)).slice(-2)
+    );
+}
+
+// Test
+if (0) {
+    const s = 'FR 03:59';
+    const a = getn(s);
+    console.assert(gett(a) === s.toUpperCase());
+}

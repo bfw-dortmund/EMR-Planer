@@ -10,7 +10,16 @@
     }
 }
 
+/* section {
+    height: 400px;
+    overflow: scroll;
+} */
+
 article {
+/*     border: 1px solid black;
+    width: 210mm;
+    height: 297mm; */
+
     & dl {
         row-gap: .25em;
         column-gap: 1em;

@@ -26,7 +26,7 @@
 </head>
 
 <body>
-    <form id="data" onsubmit="return false">
+    <form id="data" spellcheck="false" onsubmit="return false">
         <table>
             <col />
             <col />
@@ -286,8 +286,8 @@
             }
 
             for (let n = 10; n > 7; n--) {
-                data.elements[`user-${n}-monday`].value = date.toLocaleString("de",options);
-                data.elements[`user-${n}-thursday`].value = date.add({days: 1}).toLocaleString("de",options);
+                data.elements[`user-${n}-monday`].value = date.toLocaleString("de", options);
+                data.elements[`user-${n}-thursday`].value = date.add({ days: 1 }).toLocaleString("de", options);
 
             }
             //alert(this.value)
