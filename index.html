@@ -18,34 +18,37 @@
             box-sizing: border-box;
         }
 
-        input.appointment {
+        input.appointment,
+        input[id^=appointment] {
             text-transform: uppercase;
             width: 75px;
         }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/gh/cieszynski/dberta.js@latest/dberta.min.js"></script>
 </head>
 
 <body>
     <form id="data" spellcheck="false" onsubmit="return false">
         <table>
-            <col />
-            <col />
-            <col />
-            <col />
-            <col span="2" />
-            <col span="2" />
-            <col span="2" />
-            <col span="2" />
+            <col>
+            <col>
+            <col>
+            <col>
+            <col span="2">
+            <col span="2">
+            <col span="2">
+            <col span="2">
             <thead>
                 <tr>
                     <th rowspan="2">Name</th>
-                    <th rowspan="2" contenteditable="true" tabindex="-1">MED1</th>
-                    <th rowspan="2">MED2</th>
-                    <th rowspan="2">MED3</th>
-                    <th colspan="2">PSY1</th>
-                    <th colspan="2">PSY2</th>
-                    <th colspan="2">PSY3</th>
-                    <th colspan="2">PSY4</th>
+                    <th rowspan="2"><input id="editable-med1"></th>
+                    <th rowspan="2"><input id="editable-med2"></th>
+                    <th rowspan="2"><input id="editable-med3"></th>
+                    <th colspan="2"><input id="editable-psy1"></th>
+                    <th colspan="2"><input id="editable-psy2"></th>
+                    <th colspan="2"><input id="editable-psy3"></th>
+                    <th colspan="2"><input id="editable-psy4"></th>
                 </tr>
                 <tr>
                     <th>Test</th>
@@ -58,125 +61,7 @@
                     <th>Befund</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- USER 10 -->
-                <tr>
-                    <td>
-                        <input class="username" value="10">
-                    </td>
-                    <td>
-                        <input class="appointment user01 med01">
-                    </td>
-                    <td>
-                        <input class="appointment user01 med02">
-                    </td>
-                    <td>
-                        <input class="appointment user01 med03">
-                    </td>
-                    <td>
-                        <input class="appointment user01 test01">
-                    </td>
-                    <td>
-                        <input class="appointment user01 report01">
-                    </td>
-                    <td>
-                        <input class="appointment user01 test02">
-                    </td>
-                    <td>
-                        <input class="appointment user01 report02">
-                    </td>
-                    <td>
-                        <input class="appointment user01 test03">
-                    </td>
-                    <td>
-                        <input class="appointment user01 report03">
-                    </td>
-                    <td>
-                        <input class="appointment user01 test04">
-                    </td>
-                    <td>
-                        <input class="appointment user01 report04">
-                    </td>
-                </tr>
-                <!-- USER 9 -->
-                <tr>
-                    <td>
-                        <input class="username" value="9">
-                    </td>
-                    <td>
-                        <input class="appointment user02 med01">
-                    </td>
-                    <td>
-                        <input class="appointment user02 med02">
-                    </td>
-                    <td>
-                        <input class="appointment user02 med03">
-                    </td>
-                    <td>
-                        <input class="appointment user02 test01">
-                    </td>
-                    <td>
-                        <input class="appointment user02 report01">
-                    </td>
-                    <td>
-                        <input class="appointment user02 test02">
-                    </td>
-                    <td>
-                        <input class="appointment user02 report02">
-                    </td>
-                    <td>
-                        <input class="appointment user02 test03">
-                    </td>
-                    <td>
-                        <input class="appointment user02 report03">
-                    </td>
-                    <td>
-                        <input class="appointment user02 test04">
-                    </td>
-                    <td>
-                        <input class="appointment user02 report04">
-                    </td>
-                </tr>
-                <!-- USER 8 -->
-                <tr>
-                    <td>
-                        <input class="username" value="8">
-                    </td>
-                    <td>
-                        <input class="appointment user03 med01">
-                    </td>
-                    <td>
-                        <input class="appointment user03 med02">
-                    </td>
-                    <td>
-                        <input class="appointment user03 med03">
-                    </td>
-                    <td>
-                        <input class="appointment user03 test01">
-                    </td>
-                    <td>
-                        <input class="appointment user03 report01">
-                    </td>
-                    <td>
-                        <input class="appointment user03 test02">
-                    </td>
-                    <td>
-                        <input class="appointment user03 report02">
-                    </td>
-                    <td>
-                        <input class="appointment user03 test03">
-                    </td>
-                    <td>
-                        <input class="appointment user03 report03">
-                    </td>
-                    <td>
-                        <input class="appointment user03 test04">
-                    </td>
-                    <td>
-                        <input class="appointment user03 report04">
-                    </td>
-                </tr>
-            </tbody>
+            <tbody></tbody>
         </table>
         <aside>
             <fieldset>
@@ -271,6 +156,7 @@
             </article>
         </section>
     </form>
+    <button onclick="data"></button>
     <script src="utils.js"></script>
     <script>
         week.onchange = function (e) {
@@ -294,32 +180,41 @@
             //console.dir(dateOfEaster(date).toLocaleString())
         }
 
-        document.querySelectorAll('.username').forEach((item, idx) => {
-            item.id = `user-${10 - idx}`;
-            item.onchange = (e) => {
-                console.dir(e.target.id)
-            }
+        /*         document.querySelectorAll('.username').forEach((item, idx) => {
+                    item.id = `user-${10 - idx}`;
+                    item.onchange = (e) => {
+                        console.dir(e.target.id)
+                    }
+                }); */
+
+
+
+        /*         document.querySelectorAll('[contenteditable]').forEach(item => {
+                    item.oninput = function (e) {
+                        console.dir(e)
+                    }
+                }); */
+
+    </script>
+    <script src="main.js"></script>
+    <script>
+
+        addEventListener('loads', async (event) => {
+
+
+            document.querySelectorAll('.appointment').forEach(item => {
+                item.placeholder = 'TT HH:MM';
+                item.pattern =
+                    item.onfocus = function (e) {
+                        //  console.log(this)
+                    }
+
+                item.onchange = function (e) {
+                    //const regex = /((?<user>user\d\d)\s(?:(?<med>med\d\d)|(?<test>test\d\d)|(?<report>report\d\d)))/;
+                    //console.log(this.className.match(regex))
+                }
+            });
         });
-
-        document.querySelectorAll('.appointment').forEach(item => {
-            item.placeholder = 'TT HH:MM';
-
-            item.onfocus = function (e) {
-                console.log(this)
-            }
-
-            item.onchange = function (e) {
-                const regex = /((?<user>user\d\d)\s(?:(?<med>med\d\d)|(?<test>test\d\d)|(?<report>report\d\d)))/;
-                console.log(this.className.match(regex))
-            }
-        });
-
-        document.querySelectorAll('[contenteditable]').forEach(item => {
-            item.oninput = function (e) {
-                console.dir(e)
-            }
-        });
-
     </script>
 </body>
 

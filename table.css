@@ -1,3 +1,14 @@
+[id^=editable-] {
+    outline: 1px solid green;
+    width: 75px;
+}
+
+[pattern]:invalid {
+    outline: 2px solid red;
+}
+
+/*  */
+
 table {
     border: 1px solid black;
     border-collapse: collapse;

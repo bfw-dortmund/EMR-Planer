@@ -54,6 +54,9 @@ const gett = (int) => {
     );
 }
 
+// padding like 02d
+const pad2 = (num) => `0${num}`.slice(-2);
+
 // Test
 if (0) {
     const s = 'FR 03:59';
