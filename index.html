@@ -29,6 +29,7 @@
 </head>
 
 <body>
+    <button id="btnValidate">validate</button>
     <form id="data" spellcheck="false" onsubmit="return false">
         <table>
             <col>
@@ -42,7 +43,7 @@
             <thead>
                 <tr>
                     <th rowspan="2">Name</th>
-                    <th rowspan="2"><input id="editable-med1"></th>
+                    <th rowspan="2"><input id="editable-med1"/></th>
                     <th rowspan="2"><input id="editable-med2"></th>
                     <th rowspan="2"><input id="editable-med3"></th>
                     <th colspan="2"><input id="editable-psy1"></th>
@@ -155,8 +156,8 @@
                 <h3><output name="user-8-thursday" contenteditable="plaintext-only"></output></h3>
             </article>
         </section>
+    <button type="reset">reset</button>
     </form>
-    <button onclick="data"></button>
     <script src="utils.js"></script>
     <script>
         week.onchange = function (e) {
