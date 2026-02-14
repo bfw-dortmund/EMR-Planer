@@ -25,11 +25,14 @@
         }
     </style>
 
-    <script src="https://cdn.jsdelivr.net/gh/cieszynski/dberta.js@latest/dberta.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/gh/cieszynski/dberta.js@latest/dberta.min.js"></script> -->
+    <script src="dberta.js"></script>
 </head>
 
 <body>
-    <button id="btnValidate">validate</button>
+    <button id="btnValidate">btnValidate</button>
+    <button id="btnQuery">btnQuery</button>
+    <button id="btnReset">btnReset</button>
     <form id="data" spellcheck="false" onsubmit="return false">
         <table>
             <col>
@@ -43,7 +46,7 @@
             <thead>
                 <tr>
                     <th rowspan="2">Name</th>
-                    <th rowspan="2"><input id="editable-med1"/></th>
+                    <th rowspan="2"><input id="editable-med1" /></th>
                     <th rowspan="2"><input id="editable-med2"></th>
                     <th rowspan="2"><input id="editable-med3"></th>
                     <th colspan="2"><input id="editable-psy1"></th>
@@ -71,42 +74,43 @@
             </fieldset>
             <fieldset>
                 <legend>Teilnehmer</legend>
-                <label><input type="radio" name="participant" value="1">1</label>
-                <label><input type="radio" name="participant" value="2">2</label>
-                <label><input type="radio" name="participant" value="3">3</label>
-                <label><input type="radio" name="participant" value="4">4</label>
-                <label><input type="radio" name="participant" value="5">5</label>
-                <label><input type="radio" name="participant" value="6">6</label>
-                <label><input type="radio" name="participant" value="7">7</label>
-                <label><input type="radio" name="participant" value="8">8</label>
-                <label><input type="radio" name="participant" value="9">9</label>
-                <label><input type="radio" name="participant" value="10" checked>10</label>
+                <label><input id="settings-radio-participant-1" type="radio" name="participant" value="1">1</label>
+                <label><input id="settings-radio-participant-2" type="radio" name="participant" value="2">2</label>
+                <label><input id="settings-radio-participant-3" type="radio" name="participant" value="3">3</label>
+                <label><input id="settings-radio-participant-4" type="radio" name="participant" value="4">4</label>
+                <label><input id="settings-radio-participant-5" type="radio" name="participant" value="5">5</label>
+                <label><input id="settings-radio-participant-6" type="radio" name="participant" value="6">6</label>
+                <label><input id="settings-radio-participant-7" type="radio" name="participant" value="7">7</label>
+                <label><input id="settings-radio-participant-8" type="radio" name="participant" value="8">8</label>
+                <label><input id="settings-radio-participant-9" type="radio" name="participant" value="9">9</label>
+                <label><input id="settings-radio-participant-10" type="radio" name="participant" value="10"
+                        checked>10</label>
             </fieldset>
             <fieldset>
                 <legend>Mediziner</legend>
                 <label>
-                    <input type="checkbox" name="physician1" checked>Med1
+                    <input type="checkbox" id="settings-checkbox-physician-1" checked>Med1
                 </label>
                 <label>
-                    <input type="checkbox" name="physician2" checked>Med2
+                    <input type="checkbox" id="settings-checkbox-physician-2" checked>Med2
                 </label>
                 <label>
-                    <input type="checkbox" name="physician3" checked>Med3
+                    <input type="checkbox" id="settings-checkbox-physician-3" checked>Med3
                 </label>
             </fieldset>
             <fieldset>
                 <legend>Psychologen</legend>
                 <label>
-                    <input type="checkbox" name="psychologist1" checked>Psy1
+                    <input type="checkbox" id="settings-checkbox-psychologist-1" checked>Psy1
                 </label>
                 <label>
-                    <input type="checkbox" name="psychologist2" checked>Psy2
+                    <input type="checkbox" id="settings-checkbox-psychologist-2" checked>Psy2
                 </label>
                 <label>
-                    <input type="checkbox" name="psychologist3" checked>Psy3
+                    <input type="checkbox" id="settings-checkbox-psychologist-3" checked>Psy3
                 </label>
                 <label>
-                    <input type="checkbox" name="psychologist4" checked>Psy4
+                    <input type="checkbox" id="settings-checkbox-psychologist-4" checked>Psy4
                 </label>
             </fieldset>
         </aside>
@@ -156,7 +160,7 @@
                 <h3><output name="user-8-thursday" contenteditable="plaintext-only"></output></h3>
             </article>
         </section>
-    <button type="reset">reset</button>
+        <button type="reset">reset</button>
     </form>
     <script src="utils.js"></script>
     <script>
