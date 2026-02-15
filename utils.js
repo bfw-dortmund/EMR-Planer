@@ -19,6 +19,24 @@ function dateOfEaster(tpd) {
     return Temporal.PlainDate.from({ year: year, month: month, day: day + 1 });
 }
 
+function dateOrHoliday(tpd) {
+    const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    }
+    const easter = dateOfEaster(tpd);
+    const date = tpd.toLocaleString("de", options);
+
+    switch (true) {
+        case easter.add({ days: 1 }).equals(tpd):
+            return `${date}, Ostermontag`
+        default:
+            return date
+    }
+}
+
 // get day of week (MO = 0)
 const getd = (int) => Math.trunc(int / 1440);
 
@@ -55,7 +73,7 @@ const gett = (int) => {
 }
 
 // padding like 02d
-const pad2 = (num) => `0${num}`.slice(-2);
+//const pad2 = (num) => `0${num}`.slice(-2);
 
 // Test
 if (0) {

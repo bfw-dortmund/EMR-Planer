@@ -1,5 +1,4 @@
 [id^=editable-] {
-    outline: 1px solid green;
     width: 75px;
 }
 
@@ -16,10 +15,6 @@ table {
 
 td {
     border: 1px solid gray;
-}
-
-td:nth-of-type(12n+2) {
-    background-color: red;
 }
 
 th {
@@ -66,42 +61,42 @@ tbody>tr:nth-of-type(n+1) {
     visibility: collapse;
 }
 
-form:has([name="participant"][value="1"]:checked) tbody>tr:nth-of-type(n+10) {
+form:has([name="participant"][value="1"]:checked) tbody>tr:nth-last-of-type(n+10) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="2"]:checked) tbody>tr:nth-of-type(n+9) {
+form:has([name="participant"][value="2"]:checked) tbody>tr:nth-last-of-type(n+9) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="3"]:checked) tbody>tr:nth-of-type(n+8) {
+form:has([name="participant"][value="3"]:checked) tbody>tr:nth-last-of-type(n+8) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="4"]:checked) tbody>tr:nth-of-type(n+7) {
+form:has([name="participant"][value="4"]:checked) tbody>tr:nth-last-of-type(n+7) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="5"]:checked) tbody>tr:nth-of-type(n+6) {
+form:has([name="participant"][value="5"]:checked) tbody>tr:nth-last-of-type(n+6) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="6"]:checked) tbody>tr:nth-of-type(n+5) {
+form:has([name="participant"][value="6"]:checked) tbody>tr:nth-last-of-type(n+5) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="7"]:checked) tbody>tr:nth-of-type(n+4) {
+form:has([name="participant"][value="7"]:checked) tbody>tr:nth-last-of-type(n+4) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="8"]:checked) tbody>tr:nth-of-type(n+3) {
+form:has([name="participant"][value="8"]:checked) tbody>tr:nth-last-of-type(n+3) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="9"]:checked) tbody>tr:nth-of-type(n+2) {
+form:has([name="participant"][value="9"]:checked) tbody>tr:nth-last-of-type(n+2) {
     visibility: visible;
 }
 
-form:has([name="participant"][value="10"]:checked) tbody>tr:nth-of-type(n+1) {
+form:has([name="participant"][value="10"]:checked) tbody>tr:nth-last-of-type(n+1) {
     visibility: visible;
 }

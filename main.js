@@ -1,5 +1,11 @@
 const main = async (event) => {
 
+    const durations = {
+        checkup: 90,
+        report: 90,
+        test: 60
+    }
+
     const berta = await dberta.open('emr-planer-db', {
         1: {
             strings: "@id",
@@ -32,6 +38,9 @@ const main = async (event) => {
                     const [kind, type, _] = id.split('-');
 
                     switch (type) {
+                        case 'week':
+                            data.elements[id].valueAsNumber = entry.valueAsNumber;
+                            break;
                         case 'radio':
                         case 'checkbox':
                             data.elements[id].checked = entry.checked;
@@ -60,11 +69,37 @@ const main = async (event) => {
 
     async function query() {
         const tx = await berta.read('appointments');
+        const count = parseInt(data.elements.participant.value);
+        const map = new Map();
 
-        const res = await tx.appointments.queryAnd('usernumber', 1, 'active', 'true');
+        for (const n of [...Array(count).keys()].map(i => i + 1)) {
+            const res = await tx.appointments.queryAnd('usernumber', n, 'active', 'true');
 
-        res.sort((a, b) => a.time - b.time)
-        console.log(res)
+            map.set(n, res.sort((a, b) => a.time - b.time));
+
+        }
+
+
+        console.log(map)
+
+    }
+
+    async function render() {
+        console.dir(data.elements.week.valueAsNumber)
+        
+        const instant = new Date(data.elements.week.valueAsNumber).toTemporalInstant();
+        const zdt = instant.toZonedDateTimeISO("UTC");
+        let date = zdt.toPlainDate();
+
+        document.querySelectorAll('output.render-week-monday').forEach(output => {
+            output.value = dateOrHoliday(date);
+        })
+
+        date = date.add({days: 1});
+
+        document.querySelectorAll('output.render-week-tuesday').forEach(output => {
+            output.value = dateOrHoliday(date);
+        })
     }
 
     async function validate() {
@@ -99,8 +134,14 @@ const main = async (event) => {
                         )
                     )
                 ) {
-                    // TODO session durations
-                    if (value1.time === value2.time) {
+                    const
+                        start1 = value1.time,
+                        end1 = value1.time + durations[value1.task],
+                        start2 = value2.time,
+                        end2 = value2.time + durations[value2.task];
+
+                    // https://stackoverflow.com/a/3269471
+                    if ((start1 < end2) && (start2 < end1)) {
                         data.elements[key1].setCustomValidity('time');
                     }
                 }
@@ -114,7 +155,7 @@ const main = async (event) => {
     // empty oder pattern is valid
     const pattern = new RegExp('(?:(?i:MO|DI|MI|DO|FR) [01][0-9]:[0-5][0-9]){0,1}');
 
-    for (let n = 10; n > 0; n--) {
+    for (let n = 1; n <= 10; n++) {
 
         tbody.insertAdjacentHTML('beforeend', `
             <tr>
@@ -131,6 +172,30 @@ const main = async (event) => {
                 <td><input id="appointment-user-${n}-psychologist-4-test" pattern="${pattern.source}" placeholder="${placeholder}"></td>
                 <td><input id="appointment-user-${n}-psychologist-4-report" pattern="${pattern.source}" placeholder="${placeholder}"></td>
             </tr>
+            `);
+    }
+
+    const section = document.querySelector('section');
+
+    for (let n = 1; n <= 10; n++) {
+
+        section.insertAdjacentHTML('beforeend', `
+            <article>
+                <header>
+                    <h2>Termine für <output id="output-username-${n}">${n}</output></h2>
+                </header>
+                <h3><output class="render-week-monday"></output></h3>
+                <dl>
+                    <dt>bla</dt>
+                    <dd>blub</dd>
+                    <dt>bla</dt>
+                    <dd>blub</dd>
+                </dl>
+                <h3><output class="render-week-tuesday"></output></h3>
+                <h3><output class="render-week-wednesday"></output></h3>
+                <h3><output class="render-week-thursday"></output></h3>
+                <h3><output class="render-week-friday"></output></h3>
+            </article>
             `);
     }
 
@@ -159,6 +224,14 @@ const main = async (event) => {
                 const value = {}
 
                 switch (type) {
+                    case 'week':
+                        await write('settings',
+                            event.target.id,
+                            isNaN(event.target.valueAsNumber) ? null : {
+                                valueAsNumber: event.target.valueAsNumber
+                            });
+                        return;
+
                     case 'radio':
                         const tx = await berta.write('settings', 'appointments');
 
@@ -237,8 +310,9 @@ const main = async (event) => {
         }
     }
 
-    loadData();
-    validate();
+    await loadData();
+    await validate();
+    render();
 
     btnValidate.addEventListener('click', function (e) {
         validate()

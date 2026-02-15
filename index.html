@@ -18,7 +18,10 @@
             box-sizing: border-box;
         }
 
-        input.appointment,
+        input:required:invalid {
+            outline: 3px solid red;
+        }
+
         input[id^=appointment] {
             text-transform: uppercase;
             width: 75px;
@@ -70,7 +73,7 @@
         <aside>
             <fieldset>
                 <legend>Kalenderwoche</legend>
-                <input id="week" type="week">
+                <input id="settings-week" type="week" name="week" required>
             </fieldset>
             <fieldset>
                 <legend>Teilnehmer</legend>
@@ -114,57 +117,11 @@
                 </label>
             </fieldset>
         </aside>
-        <section>
-            <!-- USER 10 -->
-            <article>
-                <header>
-                    <h2>Termine für <output name="output-username-10">XXX</output></h2>
-                </header>
-                <h3><output name="user-10-monday" contenteditable="plaintext-only"></output></h3>
-                <dl>
-                    <dt>bla</dt>
-                    <dd>blub</dd>
-                    <dt>bla</dt>
-                    <dd>blub</dd>
-                </dl>
-                <h3><output name="user-10-thursday" contenteditable="plaintext-only"></output></h3>
-            </article>
-
-            <!-- USER 9-->
-            <article>
-                <header>
-                    <h2>Termine für <output name="output-username-9">XXX</output></h2>
-                </header>
-                <h3><output name="user-9-monday" contenteditable="plaintext-only"></output></h3>
-                <dl>
-                    <dt>bla</dt>
-                    <dd>blub</dd>
-                    <dt>bla</dt>
-                    <dd>blub</dd>
-                </dl>
-                <h3><output name="user-9-thursday" contenteditable="plaintext-only"></output></h3>
-            </article>
-
-            <!-- USER 8-->
-            <article>
-                <header>
-                    <h2>Termine für <output name="output-username-8">XXX</output></h2>
-                </header>
-                <h3><output name="user-8-monday" contenteditable="plaintext-only"></output></h3>
-                <dl>
-                    <dt>bla</dt>
-                    <dd>blub</dd>
-                    <dt>bla</dt>
-                    <dd>blub</dd>
-                </dl>
-                <h3><output name="user-8-thursday" contenteditable="plaintext-only"></output></h3>
-            </article>
-        </section>
-        <button type="reset">reset</button>
+        <section></section>
     </form>
     <script src="utils.js"></script>
     <script>
-        week.onchange = function (e) {
+/*         week.onchange = function (e) {
             const instant = new Date(this.valueAsNumber).toTemporalInstant();
             const zdt = instant.toZonedDateTimeISO("UTC");
             const date = zdt.toPlainDate();
@@ -183,7 +140,7 @@
             }
             //alert(this.value)
             //console.dir(dateOfEaster(date).toLocaleString())
-        }
+        } */
 
         /*         document.querySelectorAll('.username').forEach((item, idx) => {
                     item.id = `user-${10 - idx}`;
@@ -202,25 +159,6 @@
 
     </script>
     <script src="main.js"></script>
-    <script>
-
-        addEventListener('loads', async (event) => {
-
-
-            document.querySelectorAll('.appointment').forEach(item => {
-                item.placeholder = 'TT HH:MM';
-                item.pattern =
-                    item.onfocus = function (e) {
-                        //  console.log(this)
-                    }
-
-                item.onchange = function (e) {
-                    //const regex = /((?<user>user\d\d)\s(?:(?<med>med\d\d)|(?<test>test\d\d)|(?<report>report\d\d)))/;
-                    //console.log(this.className.match(regex))
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

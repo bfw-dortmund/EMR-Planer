@@ -41,14 +41,42 @@ section>article:nth-of-type(n+1) {
     display: none;
 }
 
-form:has([name="participant"][value="10"]:checked) section>article:nth-of-type(n+1) {
+form:has([name="participant"][value="1"]:checked) section>article:nth-last-of-type(n+10) {
     display: block;
 }
 
-form:has([name="participant"][value="9"]:checked) section>article:nth-of-type(n+2) {
+form:has([name="participant"][value="2"]:checked) section>article:nth-last-of-type(n+9) {
     display: block;
 }
 
-form:has([name="participant"][value="8"]:checked) section>article:nth-of-type(n+3) {
+form:has([name="participant"][value="3"]:checked) section>article:nth-last-of-type(n+8) {
+    display: block;
+}
+
+form:has([name="participant"][value="4"]:checked) section>article:nth-last-of-type(n+7) {
+    display: block;
+}
+
+form:has([name="participant"][value="5"]:checked) section>article:nth-last-of-type(n+6) {
+    display: block;
+}
+
+form:has([name="participant"][value="6"]:checked) section>article:nth-last-of-type(n+5) {
+    display: block;
+}
+
+form:has([name="participant"][value="7"]:checked) section>article:nth-last-of-type(n+4) {
+    display: block;
+}
+
+form:has([name="participant"][value="8"]:checked) section>article:nth-last-of-type(n+3) {
+    display: block;
+}
+
+form:has([name="participant"][value="9"]:checked) section>article:nth-last-of-type(n+2) {
+    display: block;
+}
+
+form:has([name="participant"][value="10"]:checked) section>article:nth-last-of-type(n+1) {
     display: block;
 }
