@@ -23,32 +23,11 @@ const main = async (event) => {
             });
         });
 
-        const appointmentKeys = await tx.appointments.getAllKeys();
-
-        appointmentKeys.forEach(id => {
-            tx.appointments.get(id)
-                .then(entry => data.elements[id].value = gett(entry.time));
-        });
-
-        const settingsKeys = await tx.settings.getAllKeys();
-        /* 
-                settingsKeys.forEach(id => {
-                    tx.settings.get(id)
-                        .then(entry => {
-                            const [kind, type, _] = id.split('-');
+        /*         const appointmentKeys = await tx.appointments.getAllKeys();
         
-                            switch (type) {
-                                case 'week':
-                                    data.elements[id].valueAsNumber = entry.valueAsNumber;
-                                    break;
-                                case 'radio':
-                                case 'checkbox':
-                                    data.elements[id].checked = entry.checked;
-                                    break;
-                                default:
-                                    console.error('unknown type: ', type)
-                            }
-                        });
+                appointmentKeys.forEach(id => {
+                    tx.appointments.get(id)
+                        .then(entry => data.elements[id].value = gett(entry.time));
                 }); */
     }
 
@@ -167,7 +146,7 @@ const main = async (event) => {
 
         tbody.insertAdjacentHTML('beforeend', `
             <tr>
-                <td><input id="username-user-${n}"></td>
+                <td><input class="username" id="username-user${n}" value="Teilnehmer ${n + 1}"></td>
                 <td><input class="appointment" data-user="user${n}" data-staff="physician1" data-task="checkup"></td>
                 <td><input class="appointment" data-user="user${n}" data-staff="physician2" data-task="checkup"></td>
                 <td><input class="appointment" data-user="user${n}" data-staff="physician3" data-task="checkup"></td>
@@ -185,12 +164,12 @@ const main = async (event) => {
 
     const section = document.querySelector('section');
 
-    for (let n = 1; n <= 10; n++) {
+    for (let n = 0; n < 10; n++) {
 
         section.insertAdjacentHTML('beforeend', `
             <article>
                 <header>
-                    <h2>Termine für <output id="output-username-${n}">${n}</output></h2>
+                    <h2>Termine für <output for="username-user${n}"></output></h2>
                 </header>
                 <h3 class="render-week-monday"></h3>
                 <dl>
@@ -224,6 +203,22 @@ const main = async (event) => {
         });
     });
 
+    data.querySelectorAll('.username').forEach(async (elem) => {
+
+        elem.addEventListener('change', async (event) => {
+            // prevent empty cells
+            event.target.value = event.target?.value
+                || event.target.defaultValue;
+
+            await write('settings',
+                event.target.id,
+                event.target.value ? {
+                    value: event.target.value
+                } : null);
+            updateOutputs(event.target);
+        });
+    });
+
     data.querySelectorAll('.staffname').forEach(async (elem) => {
 
         elem.id = 'staffname-' + Object.values(elem.dataset).join('-');
@@ -243,17 +238,22 @@ const main = async (event) => {
 
     });
 
-    const tx = await berta.read('settings');
+    const tx = await berta.read('settings', 'appointments');
     const settingsKeys = await tx.settings.getAllKeys();
 
     settingsKeys.forEach(id => {
         tx.settings.get(id)
             .then(entry => {
                 switch (true) {
-                    case !!entry.valueAsNumber:
+                    case Object.hasOwn(entry, 'checked'):
+                        data.elements[id].checked = entry.checked;
+                        break;
+
+                    case Object.hasOwn(entry, 'valueAsNumber'):
                         data.elements[id].valueAsNumber = entry.valueAsNumber;
                         break;
-                    case !!entry.value:
+
+                    case Object.hasOwn(entry, 'value'):
                         data.elements[id].value = entry.value;
                         updateOutputs(data.elements[id]);
                         break;
@@ -264,6 +264,7 @@ const main = async (event) => {
 
     data.querySelectorAll('.appointment').forEach(elem => {
 
+        // update the <datalist>
         const updateList = async (target) => {
 
             const tx = await berta.read('appointments');
@@ -321,18 +322,19 @@ const main = async (event) => {
             validate();
         });
 
-        elem.addEventListener('keyup', event => {
+        elem.addEventListener('keydown', async (event) => {
             if (event.key === 'Delete') {
+                event.target.setCustomValidity('');
                 event.target.placeholder = '';
+                event.target.value = '';
 
-                // both events in this order required to remove the value
-                event.target.dispatchEvent(new CustomEvent('input', { bubbles: true }));
-                event.target.dispatchEvent(new CustomEvent('change', { bubbles: true }));
+                await write('appointments',
+                    event.target.id,
+                    null);
             }
         });
 
         elem.addEventListener('change', async (event) => {
-
             event.target.placeholder = event.target.value;
 
             await write('appointments',
@@ -348,6 +350,12 @@ const main = async (event) => {
 
             validate();
         });
+    });
+
+    const appointmentKeys = await tx.appointments.getAllKeys();
+    appointmentKeys.forEach(id => {
+        tx.appointments.get(id)
+            .then(entry => data.elements[id].value = gett(entry.time));
     });
 
 
@@ -380,7 +388,7 @@ const main = async (event) => {
         });
     })
 
-    data.querySelectorAll('[name="staff"]').forEach(elem => {
+    data.querySelectorAll('.staff').forEach(elem => {
 
         elem.addEventListener('change', async (event) => {
             const result = await write('settings',
@@ -391,7 +399,7 @@ const main = async (event) => {
             if (result === event.target.id) {
                 const tx = await berta.write('appointments');
 
-                const r = await tx.appointments.updateAnd('staff', event.target.dataset.staff, {
+                await tx.appointments.updateAnd('staff', event.target.dataset.staff, {
                     active: event.target.checked
                 });
 
