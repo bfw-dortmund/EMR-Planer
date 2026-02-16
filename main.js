@@ -31,25 +31,25 @@ const main = async (event) => {
         });
 
         const settingsKeys = await tx.settings.getAllKeys();
-
-        settingsKeys.forEach(id => {
-            tx.settings.get(id)
-                .then(entry => {
-                    const [kind, type, _] = id.split('-');
-
-                    switch (type) {
-                        case 'week':
-                            data.elements[id].valueAsNumber = entry.valueAsNumber;
-                            break;
-                        case 'radio':
-                        case 'checkbox':
-                            data.elements[id].checked = entry.checked;
-                            break;
-                        default:
-                            console.error('unknown type: ', type)
-                    }
-                });
-        });
+        /* 
+                settingsKeys.forEach(id => {
+                    tx.settings.get(id)
+                        .then(entry => {
+                            const [kind, type, _] = id.split('-');
+        
+                            switch (type) {
+                                case 'week':
+                                    data.elements[id].valueAsNumber = entry.valueAsNumber;
+                                    break;
+                                case 'radio':
+                                case 'checkbox':
+                                    data.elements[id].checked = entry.checked;
+                                    break;
+                                default:
+                                    console.error('unknown type: ', type)
+                            }
+                        });
+                }); */
     }
 
     async function write(store, id, value) {
@@ -207,13 +207,68 @@ const main = async (event) => {
             `);
     }
 
+    function updateOutputs(target) {
+        data.querySelectorAll(`output[for=${target.id}]`).forEach(output => {
+            output.value = target.value;
+        })
+    }
+
+    data.elements.week.addEventListener('change', async (event) => {
+        // prevent invalid dates
+        event.target.valueAsNumber = event.target?.valueAsNumber
+            || Temporal.Now.instant().epochMilliseconds;
+
+        await write('settings',
+            event.target.id, {
+            valueAsNumber: event.target.valueAsNumber
+        });
+    });
+
+    data.querySelectorAll('.staffname').forEach(async (elem) => {
+
+        elem.id = 'staffname-' + Object.values(elem.dataset).join('-');
+
+        elem.addEventListener('change', async (event) => {
+            // prevent empty cells
+            event.target.value = event.target?.value
+                || event.target.defaultValue;
+
+            await write('settings',
+                event.target.id,
+                event.target.value ? {
+                    value: event.target.value
+                } : null);
+            updateOutputs(event.target);
+        })
+
+    });
+
+    const tx = await berta.read('settings');
+    const settingsKeys = await tx.settings.getAllKeys();
+
+    settingsKeys.forEach(id => {
+        tx.settings.get(id)
+            .then(entry => {
+                switch (true) {
+                    case !!entry.valueAsNumber:
+                        data.elements[id].valueAsNumber = entry.valueAsNumber;
+                        break;
+                    case !!entry.value:
+                        data.elements[id].value = entry.value;
+                        updateOutputs(data.elements[id]);
+                        break;
+                }
+            })
+    });
+
+
     data.querySelectorAll('.appointment').forEach(elem => {
 
         const updateList = async (target) => {
 
             const tx = await berta.read('appointments');
-            const entries = await tx.appointments.where('active', 'true')//dberta.eq('true'))//queryAnd('active', 'true');
-            
+            const entries = await tx.appointments.where('active', 'true');
+
             Array.from(appointments.options).forEach(option => {
 
                 option.removeAttribute('disabled');
@@ -236,12 +291,10 @@ const main = async (event) => {
             });
         }
 
-        const pattern = new RegExp('(?:(?i:MO|DI|MI|DO|FR) [01][0-9]:[0-5][0-9]){0,1}')
-
         //console.log(Object.values(elem.dataset).join('-'))
         elem.id = 'appointment-' + Object.values(elem.dataset).join('-');
 
-        // empty oder pattern is valid
+        // empty or pattern is valid
         elem.pattern = "(?:(?i:MO|DI|MI|DO|FR) [01][0-9]:[0-5][0-9]){0,1}";
         //elem.placeholder = '__ __:__'// 'TT HH:MM';
 
@@ -296,6 +349,7 @@ const main = async (event) => {
             validate();
         });
     });
+
 
     data.querySelectorAll('[name="participant"]').forEach(elem => {
 

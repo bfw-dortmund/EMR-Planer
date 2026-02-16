@@ -58,13 +58,13 @@
             <thead>
                 <tr>
                     <th rowspan="2">Name</th>
-                    <th rowspan="2"><input id="editable-med1" /></th>
-                    <th rowspan="2"><input id="editable-med2"></th>
-                    <th rowspan="2"><input id="editable-med3"></th>
-                    <th colspan="2"><input id="editable-psy1"></th>
-                    <th colspan="2"><input id="editable-psy2"></th>
-                    <th colspan="2"><input id="editable-psy3"></th>
-                    <th colspan="2"><input id="editable-psy4"></th>
+                    <th rowspan="2"><input class="staffname" data-staff="physician1" value="med1" required/></th>
+                    <th rowspan="2"><input class="staffname" data-staff="physician2" value="med2" required></th>
+                    <th rowspan="2"><input class="staffname" data-staff="physician3" value="med3" required></th>
+                    <th colspan="2"><input class="staffname" data-staff="psychologist1" value="psy1" required></th>
+                    <th colspan="2"><input class="staffname" data-staff="psychologist2" value="psy2" required></th>
+                    <th colspan="2"><input class="staffname" data-staff="psychologist3" value="psy3" required></th>
+                    <th colspan="2"><input class="staffname" data-staff="psychologist4" value="psy4" required></th>
                 </tr>
                 <tr>
                     <th>Test</th>
@@ -101,28 +101,35 @@
             <fieldset>
                 <legend>Mediziner</legend>
                 <label>
-                    <input name="staff" type="checkbox" id="settings-checkbox-physician-1" checked>Med1
+                    <input name="staff" type="checkbox" id="settings-checkbox-physician-1" checked>
+                    <output value="med1" for="staffname-physician1"></output>
                 </label>
                 <label>
-                    <input name="staff" type="checkbox" id="settings-checkbox-physician-2" checked>Med2
+                    <input name="staff" type="checkbox" id="settings-checkbox-physician-2" checked>
+                    <output value="med2" for="staffname-physician2"></output>
                 </label>
                 <label>
-                    <input name="staff" type="checkbox" id="settings-checkbox-physician-3" checked>Med3
+                    <input name="staff" type="checkbox" id="settings-checkbox-physician-3" checked>
+                    <output value="med3" for="staffname-physician3"></output>
                 </label>
             </fieldset>
             <fieldset>
                 <legend>Psychologen</legend>
                 <label>
-                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-1" checked>Psy1
+                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-1" checked>
+                    <output value="psy1" for="staffname-psychologist1"></output>
                 </label>
                 <label>
-                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-2" checked>Psy2
+                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-2" checked>
+                    <output value="psy2" for="staffname-psychologist2"></output>
                 </label>
                 <label>
-                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-3" checked>Psy3
+                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-3" checked>
+                    <output value="psy3" for="staffname-psychologist3"></output>
                 </label>
                 <label>
-                    <input type="checkbox" id="settings-checkbox-psychologist-4">Psy4
+                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-4">
+                    <output value="psy4" for="staffname-psychologist4"></output>
                 </label>
             </fieldset>
         </aside>
@@ -130,44 +137,6 @@
     </form>
 
     <script src="utils.js"></script>
-    <script>
-        /*         week.onchange = function (e) {
-                    const instant = new Date(this.valueAsNumber).toTemporalInstant();
-                    const zdt = instant.toZonedDateTimeISO("UTC");
-                    const date = zdt.toPlainDate();
-        
-                    const options = {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric"
-                    }
-        
-                    for (let n = 10; n > 7; n--) {
-                        data.elements[`user-${n}-monday`].value = date.toLocaleString("de", options);
-                        data.elements[`user-${n}-thursday`].value = date.add({ days: 1 }).toLocaleString("de", options);
-        
-                    }
-                    //alert(this.value)
-                    //console.dir(dateOfEaster(date).toLocaleString())
-                } */
-
-        /*         document.querySelectorAll('.username').forEach((item, idx) => {
-                    item.id = `user-${10 - idx}`;
-                    item.onchange = (e) => {
-                        console.dir(e.target.id)
-                    }
-                }); */
-
-
-
-        /*         document.querySelectorAll('[contenteditable]').forEach(item => {
-                    item.oninput = function (e) {
-                        console.dir(e)
-                    }
-                }); */
-
-    </script>
     <script src="main.js"></script>
 </body>
 

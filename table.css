@@ -1,4 +1,5 @@
-[id^=editable-] {
+input.staffname{
+    text-align: center;
     width: 75px;
 }
 
