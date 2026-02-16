@@ -22,10 +22,7 @@
             outline: 3px solid red;
         }
 
-        input[id^=appointment] {
-            text-transform: uppercase;
-            width: 75px;
-        }
+
     </style>
 
     <!-- <script src="https://cdn.jsdelivr.net/gh/cieszynski/dberta.js@latest/dberta.min.js"></script> -->
@@ -36,6 +33,18 @@
     <button id="btnValidate">btnValidate</button>
     <button id="btnQuery">btnQuery</button>
     <button id="btnReset">btnReset</button>
+
+    <datalist id="appointments">
+        <option>MO 13:00</option>
+        <option>MO 14:30</option>
+        <option>MO 15:15</option>
+        <option>DI 09:00</option>
+        <option>DI 10:30</option>
+        <option>DI 13:00</option>
+        <option>DI 14:30</option>
+        <option>MI 08:00</option>
+    </datalist>
+
     <form id="data" spellcheck="false" onsubmit="return false">
         <table>
             <col>
@@ -77,70 +86,71 @@
             </fieldset>
             <fieldset>
                 <legend>Teilnehmer</legend>
-                <label><input id="settings-radio-participant-1" type="radio" name="participant" value="1">1</label>
-                <label><input id="settings-radio-participant-2" type="radio" name="participant" value="2">2</label>
-                <label><input id="settings-radio-participant-3" type="radio" name="participant" value="3">3</label>
-                <label><input id="settings-radio-participant-4" type="radio" name="participant" value="4">4</label>
-                <label><input id="settings-radio-participant-5" type="radio" name="participant" value="5">5</label>
-                <label><input id="settings-radio-participant-6" type="radio" name="participant" value="6">6</label>
-                <label><input id="settings-radio-participant-7" type="radio" name="participant" value="7">7</label>
-                <label><input id="settings-radio-participant-8" type="radio" name="participant" value="8">8</label>
-                <label><input id="settings-radio-participant-9" type="radio" name="participant" value="9">9</label>
-                <label><input id="settings-radio-participant-10" type="radio" name="participant" value="10"
+                <label><input id="settings-radio-participant-1" type="radio" name="participant" value="user0">1</label>
+                <label><input id="settings-radio-participant-2" type="radio" name="participant" value="user1">2</label>
+                <label><input id="settings-radio-participant-3" type="radio" name="participant" value="user2">3</label>
+                <label><input id="settings-radio-participant-4" type="radio" name="participant" value="user3">4</label>
+                <label><input id="settings-radio-participant-5" type="radio" name="participant" value="user4">5</label>
+                <label><input id="settings-radio-participant-6" type="radio" name="participant" value="user5">6</label>
+                <label><input id="settings-radio-participant-7" type="radio" name="participant" value="user6">7</label>
+                <label><input id="settings-radio-participant-8" type="radio" name="participant" value="user7">8</label>
+                <label><input id="settings-radio-participant-9" type="radio" name="participant" value="user8">9</label>
+                <label><input id="settings-radio-participant-10" type="radio" name="participant" value="user9"
                         checked>10</label>
             </fieldset>
             <fieldset>
                 <legend>Mediziner</legend>
                 <label>
-                    <input type="checkbox" id="settings-checkbox-physician-1" checked>Med1
+                    <input name="staff" type="checkbox" id="settings-checkbox-physician-1" checked>Med1
                 </label>
                 <label>
-                    <input type="checkbox" id="settings-checkbox-physician-2" checked>Med2
+                    <input name="staff" type="checkbox" id="settings-checkbox-physician-2" checked>Med2
                 </label>
                 <label>
-                    <input type="checkbox" id="settings-checkbox-physician-3" checked>Med3
+                    <input name="staff" type="checkbox" id="settings-checkbox-physician-3" checked>Med3
                 </label>
             </fieldset>
             <fieldset>
                 <legend>Psychologen</legend>
                 <label>
-                    <input type="checkbox" id="settings-checkbox-psychologist-1" checked>Psy1
+                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-1" checked>Psy1
                 </label>
                 <label>
-                    <input type="checkbox" id="settings-checkbox-psychologist-2" checked>Psy2
+                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-2" checked>Psy2
                 </label>
                 <label>
-                    <input type="checkbox" id="settings-checkbox-psychologist-3" checked>Psy3
+                    <input name="staff" type="checkbox" id="settings-checkbox-psychologist-3" checked>Psy3
                 </label>
                 <label>
-                    <input type="checkbox" id="settings-checkbox-psychologist-4" checked>Psy4
+                    <input type="checkbox" id="settings-checkbox-psychologist-4">Psy4
                 </label>
             </fieldset>
         </aside>
         <section></section>
     </form>
+
     <script src="utils.js"></script>
     <script>
-/*         week.onchange = function (e) {
-            const instant = new Date(this.valueAsNumber).toTemporalInstant();
-            const zdt = instant.toZonedDateTimeISO("UTC");
-            const date = zdt.toPlainDate();
-
-            const options = {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-            }
-
-            for (let n = 10; n > 7; n--) {
-                data.elements[`user-${n}-monday`].value = date.toLocaleString("de", options);
-                data.elements[`user-${n}-thursday`].value = date.add({ days: 1 }).toLocaleString("de", options);
-
-            }
-            //alert(this.value)
-            //console.dir(dateOfEaster(date).toLocaleString())
-        } */
+        /*         week.onchange = function (e) {
+                    const instant = new Date(this.valueAsNumber).toTemporalInstant();
+                    const zdt = instant.toZonedDateTimeISO("UTC");
+                    const date = zdt.toPlainDate();
+        
+                    const options = {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
+                    }
+        
+                    for (let n = 10; n > 7; n--) {
+                        data.elements[`user-${n}-monday`].value = date.toLocaleString("de", options);
+                        data.elements[`user-${n}-thursday`].value = date.add({ days: 1 }).toLocaleString("de", options);
+        
+                    }
+                    //alert(this.value)
+                    //console.dir(dateOfEaster(date).toLocaleString())
+                } */
 
         /*         document.querySelectorAll('.username').forEach((item, idx) => {
                     item.id = `user-${10 - idx}`;

@@ -2,14 +2,14 @@ const main = async (event) => {
 
     const durations = {
         checkup: 90,
-        report: 90,
-        test: 60
+        report: 30,
+        test: 90
     }
 
     const berta = await dberta.open('emr-planer-db', {
         1: {
             strings: "@id",
-            appointments: ", time, usernumber, field, staffnumber, task, active",
+            appointments: ", time, user, staff, task, active",
             settings: ", name"
         }
     });
@@ -85,20 +85,36 @@ const main = async (event) => {
     }
 
     async function render() {
-        console.dir(data.elements.week.valueAsNumber)
-        
         const instant = new Date(data.elements.week.valueAsNumber).toTemporalInstant();
         const zdt = instant.toZonedDateTimeISO("UTC");
         let date = zdt.toPlainDate();
 
-        document.querySelectorAll('output.render-week-monday').forEach(output => {
-            output.value = dateOrHoliday(date);
+        document.querySelectorAll('h3.render-week-monday').forEach(elem => {
+            elem.textContent = dateOrHoliday(date);
         })
 
-        date = date.add({days: 1});
+        date = date.add({ days: 1 });
 
-        document.querySelectorAll('output.render-week-tuesday').forEach(output => {
-            output.value = dateOrHoliday(date);
+        document.querySelectorAll('h3.render-week-tuesday').forEach(elem => {
+            elem.textContent = dateOrHoliday(date);
+        })
+
+        date = date.add({ days: 1 });
+
+        document.querySelectorAll('h3.render-week-wednesday').forEach(elem => {
+            elem.textContent = dateOrHoliday(date);
+        })
+
+        date = date.add({ days: 1 });
+
+        document.querySelectorAll('h3.render-week-thursday').forEach(elem => {
+            elem.textContent = dateOrHoliday(date);
+        })
+
+        date = date.add({ days: 1 });
+
+        document.querySelectorAll('h3.render-week-friday').forEach(elem => {
+            elem.textContent = dateOrHoliday(date);
         })
     }
 
@@ -118,22 +134,18 @@ const main = async (event) => {
             data.elements[key1].setCustomValidity('');
 
             // disabled entries are skipped
-            if (!value1.active) return;
+            if (value1.active !== 'true') return;
 
             // compare each entry with each entry
             map.forEach((value2, key2) => {
 
                 // disabled entries are skipped
-                if (!value2.active) return;
+                if (value2.active !== 'true') return;
 
-                if ((key1 !== key2)                                         // do not compare it with itself
-                    && ((value1.usernumber === value2.usernumber)           // only for the same usernumber OR
-                        || (
-                            (value1.field === value2.field)                 // only for the same field AND
-                            && (value1.staffnumber === value2.staffnumber)  // only for the same staffnumber
-                        )
-                    )
-                ) {
+                if ((key1 !== key2)
+                    && ((value1.user === value2.user)
+                        || (value1.staff === value2.staff))) {
+
                     const
                         start1 = value1.time,
                         end1 = value1.time + durations[value1.task],
@@ -150,27 +162,23 @@ const main = async (event) => {
     }
 
     const tbody = document.querySelector("tbody");
-    const placeholder = 'TT hh:mm';
 
-    // empty oder pattern is valid
-    const pattern = new RegExp('(?:(?i:MO|DI|MI|DO|FR) [01][0-9]:[0-5][0-9]){0,1}');
-
-    for (let n = 1; n <= 10; n++) {
+    for (let n = 0; n < 10; n++) {
 
         tbody.insertAdjacentHTML('beforeend', `
             <tr>
                 <td><input id="username-user-${n}"></td>
-                <td><input id="appointment-user-${n}-physician-1-checkup" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-physician-2-checkup" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-physician-3-checkup" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-psychologist-1-test" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-psychologist-1-report" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-psychologist-2-test" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-psychologist-2-report" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-psychologist-3-test" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-psychologist-3-report" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-psychologist-4-test" pattern="${pattern.source}" placeholder="${placeholder}"></td>
-                <td><input id="appointment-user-${n}-psychologist-4-report" pattern="${pattern.source}" placeholder="${placeholder}"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician1" data-task="checkup"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician2" data-task="checkup"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician3" data-task="checkup"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician1" data-task="test"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician1" data-task="report"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician2" data-task="test"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician2" data-task="report"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician3" data-task="test"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician3" data-task="report"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician4" data-task="test"></td>
+                <td><input class="appointment" data-user="user${n}" data-staff="physician4" data-task="report"></td>
             </tr>
             `);
     }
@@ -184,36 +192,159 @@ const main = async (event) => {
                 <header>
                     <h2>Termine für <output id="output-username-${n}">${n}</output></h2>
                 </header>
-                <h3><output class="render-week-monday"></output></h3>
+                <h3 class="render-week-monday"></h3>
                 <dl>
                     <dt>bla</dt>
                     <dd>blub</dd>
                     <dt>bla</dt>
                     <dd>blub</dd>
                 </dl>
-                <h3><output class="render-week-tuesday"></output></h3>
-                <h3><output class="render-week-wednesday"></output></h3>
-                <h3><output class="render-week-thursday"></output></h3>
-                <h3><output class="render-week-friday"></output></h3>
+                <h3 class="render-week-tuesday"></h3>
+                <h3 class="render-week-wednesday"></h3>
+                <h3 class="render-week-thursday"></h3>
+                <h3 class="render-week-friday"></h3>
             </article>
             `);
     }
 
-    data.oninput = async (event) => {
-        const [kind, data] = event.target.id.split('-');
+    data.querySelectorAll('.appointment').forEach(elem => {
 
-        switch (kind) {
-            case 'editable':
-                write('strings', { id: event.target.id, value: event.target.value });
-                break;
+        const updateList = async (target) => {
 
-            case 'appointment':
-                event.target.setCustomValidity(
-                    pattern.test(event.target.value) ? "" : "time"
-                )
-                break;
+            const tx = await berta.read('appointments');
+            const entries = await tx.appointments.where('active', 'true')//dberta.eq('true'))//queryAnd('active', 'true');
+            
+            Array.from(appointments.options).forEach(option => {
+
+                option.removeAttribute('disabled');
+
+                entries.forEach(entry => {
+
+                    if ((entry.user === target.dataset.user)
+                        || ((entry.staff === target.dataset.staff))) {
+                        const
+                            start1 = getn(option.value),
+                            end1 = start1 + durations[target.dataset.task],
+                            start2 = entry.time,
+                            end2 = start2 + durations[entry.task];
+
+                        if ((start1 < end2) && (start2 < end1)) {
+                            option.setAttribute('disabled', true);
+                        }
+                    }
+                });
+            });
         }
-    }
+
+        const pattern = new RegExp('(?:(?i:MO|DI|MI|DO|FR) [01][0-9]:[0-5][0-9]){0,1}')
+
+        //console.log(Object.values(elem.dataset).join('-'))
+        elem.id = 'appointment-' + Object.values(elem.dataset).join('-');
+
+        // empty oder pattern is valid
+        elem.pattern = "(?:(?i:MO|DI|MI|DO|FR) [01][0-9]:[0-5][0-9]){0,1}";
+        //elem.placeholder = '__ __:__'// 'TT HH:MM';
+
+        // This is a read-only property so setAttribute()
+        elem.setAttribute('list', 'appointments');
+
+        // update appointments list early as possible
+        elem.addEventListener('pointerenter', event => {
+            updateList(event.target);
+        });
+
+        // store the current value as placeholder...
+        elem.addEventListener('focus', event => {
+            event.target.placeholder = event.target.value;
+            event.target.value = '';
+            updateList(event.target);
+        });
+
+        // ... set value back from placeholder
+        elem.addEventListener('blur', event => {
+            event.target.value = event.target.placeholder;
+            event.target.placeholder = '';
+
+            validate();
+        });
+
+        elem.addEventListener('keyup', event => {
+            if (event.key === 'Delete') {
+                event.target.placeholder = '';
+
+                // both events in this order required to remove the value
+                event.target.dispatchEvent(new CustomEvent('input', { bubbles: true }));
+                event.target.dispatchEvent(new CustomEvent('change', { bubbles: true }));
+            }
+        });
+
+        elem.addEventListener('change', async (event) => {
+
+            event.target.placeholder = event.target.value;
+
+            await write('appointments',
+                event.target.id,
+                event.target.value ? {
+                    active: 'true',
+                    time: getn(event.target.value),
+                    user: event.target.dataset.user,
+                    staff: event.target.dataset.staff,
+                    task: event.target.dataset.task
+                } : null
+            );
+
+            validate();
+        });
+    });
+
+    data.querySelectorAll('[name="participant"]').forEach(elem => {
+
+        elem.addEventListener('change', async (event) => {
+
+            const tx = await berta.write('settings', 'appointments');
+
+            // only setting fires event, so we do not know
+            // the former selected item and delete them all
+            tx.settings.deleteAnd('name', event.target.name)
+                .then(() => {
+                    return tx.settings.put({
+                        name: event.target.name,
+                        checked: true
+                    }, event.target.id)
+                })
+                .then(() => {
+                    return tx.appointments.updateAnd('user', dberta.le(event.target.value), {
+                        active: 'true'
+                    });
+                })
+                .then(() => {
+                    return tx.appointments.updateAnd('user', dberta.gt(event.target.value), {
+                        active: 'false'
+                    });
+                })
+                .then(() => validate());
+        });
+    })
+
+    data.querySelectorAll('[name="staff"]').forEach(elem => {
+
+        elem.addEventListener('change', async (event) => {
+            const result = await write('settings',
+                event.target.id, {
+                checked: event.target.checked
+            });
+
+            if (result === event.target.id) {
+                const tx = await berta.write('appointments');
+
+                const r = await tx.appointments.updateAnd('staff', event.target.dataset.staff, {
+                    active: event.target.checked
+                });
+
+                validate();
+            }
+        });
+    });
 
     data.onchange = async (event) => {
         const [kind, ...data] = event.target.id.split('-');
@@ -230,44 +361,25 @@ const main = async (event) => {
                             isNaN(event.target.valueAsNumber) ? null : {
                                 valueAsNumber: event.target.valueAsNumber
                             });
+                        render();
                         return;
 
                     case 'radio':
-                        const tx = await berta.write('settings', 'appointments');
-
-                        tx.settings.deleteAnd('name', event.target.name)
-                            .then(() => {
-                                return tx.settings.put({
-                                    name: event.target.name,
-                                    checked: true
-                                }, event.target.id)
-                            })
-                            .then(() => {
-                                return tx.appointments.updateAnd('usernumber', dberta.le(parseInt(event.target.value)), {
-                                    active: true
-                                });
-                            })
-                            .then(() => {
-                                return tx.appointments.updateAnd('usernumber', dberta.gt(parseInt(event.target.value)), {
-                                    active: false
-                                });
-                            })
-                            .then(() => validate());
-                        return;
-
                     case 'checkbox':
+                        return
                         value.checked = event.target.checked
                         break;
                     default:
                         console.error('unknown type: ', type)
                 }
+                return
 
                 const result = await write('settings', event.target.id, value);
 
                 if (result === event.target.id) {
                     const tx = await berta.write('appointments');
 
-                    const r = await tx.appointments.updateAnd('field', field, 'staffnumber', staffnumber, {
+                    const r = await tx.appointments.updateAnd('staff', event.target.datast.staff, {
                         active: event.target.checked
                     });
 
@@ -283,13 +395,14 @@ const main = async (event) => {
                 }
                 break;
 
-            case 'appointment':
+            case 'appointmentX':
+                event.target.placeholder = event.target.value
                 if (event.target.validity.valid) {
                     const [_, usernumber, field, staffnumber, task] = data;
                     const result = await write('appointments',
                         event.target.id,
                         event.target.value ? {
-                            active: true,
+                            active: 'true',
                             time: getn(event.target.value),
                             usernumber: parseInt(usernumber),
                             staffnumber: parseInt(staffnumber),

@@ -41,42 +41,42 @@ section>article:nth-of-type(n+1) {
     display: none;
 }
 
-form:has([name="participant"][value="1"]:checked) section>article:nth-last-of-type(n+10) {
+form:has([name="participant"][value="user0"]:checked) section>article:nth-last-of-type(n+10) {
     display: block;
 }
 
-form:has([name="participant"][value="2"]:checked) section>article:nth-last-of-type(n+9) {
+form:has([name="participant"][value="user1"]:checked) section>article:nth-last-of-type(n+9) {
     display: block;
 }
 
-form:has([name="participant"][value="3"]:checked) section>article:nth-last-of-type(n+8) {
+form:has([name="participant"][value="user2"]:checked) section>article:nth-last-of-type(n+8) {
     display: block;
 }
 
-form:has([name="participant"][value="4"]:checked) section>article:nth-last-of-type(n+7) {
+form:has([name="participant"][value="user3"]:checked) section>article:nth-last-of-type(n+7) {
     display: block;
 }
 
-form:has([name="participant"][value="5"]:checked) section>article:nth-last-of-type(n+6) {
+form:has([name="participant"][value="user4"]:checked) section>article:nth-last-of-type(n+6) {
     display: block;
 }
 
-form:has([name="participant"][value="6"]:checked) section>article:nth-last-of-type(n+5) {
+form:has([name="participant"][value="user5"]:checked) section>article:nth-last-of-type(n+5) {
     display: block;
 }
 
-form:has([name="participant"][value="7"]:checked) section>article:nth-last-of-type(n+4) {
+form:has([name="participant"][value="user6"]:checked) section>article:nth-last-of-type(n+4) {
     display: block;
 }
 
-form:has([name="participant"][value="8"]:checked) section>article:nth-last-of-type(n+3) {
+form:has([name="participant"][value="user7"]:checked) section>article:nth-last-of-type(n+3) {
     display: block;
 }
 
-form:has([name="participant"][value="9"]:checked) section>article:nth-last-of-type(n+2) {
+form:has([name="participant"][value="user8"]:checked) section>article:nth-last-of-type(n+2) {
     display: block;
 }
 
-form:has([name="participant"][value="10"]:checked) section>article:nth-last-of-type(n+1) {
+form:has([name="participant"][value="user9"]:checked) section>article:nth-last-of-type(n+1) {
     display: block;
 }
