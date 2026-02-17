@@ -21,18 +21,16 @@
         input:required:invalid {
             outline: 3px solid red;
         }
-
-
     </style>
 
     <!-- <script src="https://cdn.jsdelivr.net/gh/cieszynski/dberta.js@latest/dberta.min.js"></script> -->
     <script src="dberta.js"></script>
-</head>
 
 <body>
     <button id="btnValidate">btnValidate</button>
     <button id="btnQuery">btnQuery</button>
     <button id="btnReset">btnReset</button>
+    <button id="btnRender">btnRender</button>
 
     <datalist id="appointments">
         <option>MO 13:00</option>
@@ -58,7 +56,7 @@
             <thead>
                 <tr>
                     <th rowspan="2">Name</th>
-                    <th rowspan="2"><input class="staffname" data-staff="physician1" value="med1" required/></th>
+                    <th rowspan="2"><input class="staffname" data-staff="physician1" value="med1" required /></th>
                     <th rowspan="2"><input class="staffname" data-staff="physician2" value="med2" required></th>
                     <th rowspan="2"><input class="staffname" data-staff="physician3" value="med3" required></th>
                     <th colspan="2"><input class="staffname" data-staff="psychologist1" value="psy1" required></th>
@@ -133,7 +131,44 @@
                 </label>
             </fieldset>
         </aside>
-        <section></section>
+        <main>
+            <article>
+                <header>
+                    <h2>Termine</h2>
+                </header>
+                <section>
+                    <h3>Montag</h3>
+
+                </section>
+            </article>
+            <article>
+                <header>
+                    <h2>Termine</h2>
+                </header>
+                <section>
+                    <h3>Montag</h3>
+
+                </section>
+            </article>
+            <article>
+                <header>
+                    <h2>Termine</h2>
+                </header>
+                <section>
+                    <h3>Montag</h3>
+
+                </section>
+            </article>
+            <article>
+                <header>
+                    <h2>Termine</h2>
+                </header>
+                <section>
+                    <h3>Montag</h3>
+
+                </section>
+            </article>
+        </main>
     </form>
 
     <script src="utils.js"></script>

@@ -9,7 +9,7 @@ const main = async (event) => {
     const berta = await dberta.open('emr-planer-db', {
         1: {
             strings: "@id",
-            appointments: ", time, user, staff, task, active",
+            appointments: ", time, unum, start, end, user, staff, task, active",
             settings: ", name"
         }
     });
@@ -63,7 +63,7 @@ const main = async (event) => {
 
     }
 
-    async function render() {
+    async function renderX() {
         const instant = new Date(data.elements.week.valueAsNumber).toTemporalInstant();
         const zdt = instant.toZonedDateTimeISO("UTC");
         let date = zdt.toPlainDate();
@@ -164,7 +164,7 @@ const main = async (event) => {
 
     const section = document.querySelector('section');
 
-    for (let n = 0; n < 10; n++) {
+    for (let n = 0; n < /* 1 */0; n++) {
 
         section.insertAdjacentHTML('beforeend', `
             <article>
@@ -337,11 +337,17 @@ const main = async (event) => {
         elem.addEventListener('change', async (event) => {
             event.target.placeholder = event.target.value;
 
+            const start = getn(event.target.value);
+            const end = start + durations[event.target.dataset.task];
+
             await write('appointments',
                 event.target.id,
                 event.target.value ? {
                     active: 'true',
                     time: getn(event.target.value),
+                    start: start,
+                    end: end,
+                    unum: parseInt(event.target.dataset.user.slice(-1)),
                     user: event.target.dataset.user,
                     staff: event.target.dataset.staff,
                     task: event.target.dataset.task
@@ -487,7 +493,7 @@ const main = async (event) => {
 
     await loadData();
     await validate();
-    render();
+    //render();
 
     btnValidate.addEventListener('click', function (e) {
         validate()
@@ -499,6 +505,57 @@ const main = async (event) => {
 
     btnReset.addEventListener('click', function (e) {
         reset()
+    });
+
+    btnRender.addEventListener('click', async (event) => {
+
+        const tx = await berta.read('appointments');
+
+        for (const [idx, article] of document.querySelectorAll('article').entries()) {
+
+            const times = [
+                {   // Dienstag
+                    start: 1920,
+                    end: 1965,
+                    task: 'Morgenrunde'
+                },
+                {
+                    start: 2070,
+                    end: 2160,
+                    task: 'Gesundheitsförderung1'
+                },
+                {
+                    start: 2220,
+                    end: 2310,
+                    task: 'Gesundheitsförderung2'
+                }].concat(await tx.appointments.queryAnd(
+                    'unum', dberta.eq(idx),
+                    'active', dberta.ge(1)
+                )).sort((a, b) => (a.start - b.start) || (a.end - b.end));
+
+            console.log('user', idx)
+
+            times.forEach((item, i, arr) => {
+
+                const
+                    start1 = arr[i].start,
+                    end1 = arr[i].end,
+                    start2 = arr[i + 1]?.start,
+                    end2 = arr[i + 1]?.end
+
+                if ((start1 < end2) && (end1 > start2)) {
+                    //console.log(item.active ,item.task)
+                    if (!item.active) {
+                        //arr.splice(i, 1);
+                        return;
+                    } else {
+                        arr.splice(i + 1, 1)
+                    }
+                }
+
+                console.log(gett(item.start), item.task)
+            })
+        }
     });
 
 }
